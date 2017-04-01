@@ -1,0 +1,6 @@
+﻿  Algorithm.cpp
+e:\study\algorithm\algorithm\algorithm.cpp(23): warning C4101: 'j' :참조되지 않은 지역 변수입니다.
+e:\study\algorithm\algorithm\algorithm.cpp(23): warning C4101: 'i' :참조되지 않은 지역 변수입니다.
+e:\study\algorithm\algorithm\algorithm.cpp(23): warning C4101: 't' :참조되지 않은 지역 변수입니다.
+  Algorithm.vcxproj -> E:\Study\Algorithm\Debug\Algorithm.exe
+  Algorithm.vcxproj -> E:\Study\Algorithm\Debug\Algorithm.pdb (Full PDB)

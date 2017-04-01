@@ -1,0 +1,4 @@
+﻿  first_client.cpp
+e:\study\first_client\first_client\first_client.cpp(42): warning C4101: 'line' :참조되지 않은 지역 변수입니다.
+  first_client.vcxproj -> E:\Study\first_client\Debug\first_client.exe
+  first_client.vcxproj -> E:\Study\first_client\Debug\first_client.pdb (Full PDB)
