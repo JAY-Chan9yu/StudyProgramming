@@ -1,0 +1,79 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+int solution(string str1, string str2);
+int main(void)
+{
+	string arr[] = {"FRANCE", "french", "handshake", "shake hands", "aa1+aa2", "AAAA12", "E=M*C^2", "e=m*c^2"};
+	vector <string> testCase(arr, arr + (sizeof(arr) / sizeof(arr[0])));
+	
+	cout << "출력 : " << solution(testCase[0], testCase[1]) << "\n" << endl;
+	cout << "출력 : " << solution(testCase[2], testCase[3]) << "\n" << endl;
+	cout << "출력 : " << solution(testCase[4], testCase[5]) << "\n" << endl;
+	cout << "출력 : " << solution(testCase[6], testCase[7]) << "\n" << endl;
+	
+	return 0;
+}								
+
+int solution(string str1, string str2)
+{
+	int answer = 0;
+	vector <string> devideStr1(str1.size());
+	vector <string> devideStr2(str2.size());
+	
+	// 1. 문자열 두개씩 쪼개기 단, 모두 숫자여야 저장
+	int saveNum = 0;
+	for(int i = 0; i < (int)str1.size() - 1; i ++) {
+		char temp[3] = {0,};
+		temp[0] = str1[i];
+		temp[1] = str1[i+1];
+
+		if(((temp[0] >= 'A' && temp[0] <= 'Z') || (temp[0] >= 'a' && temp[0] <= 'z'))
+			&& ((temp[1] >= 'A' && temp[1] <= 'Z') || (temp[1] >= 'a' && temp[1] <= 'z'))) devideStr1[saveNum ++] = temp;
+	}
+	
+	saveNum = 0;
+	for(int i = 0; i < (int)str2.size() - 1; i ++) {
+		char temp[3] = {0,};
+		temp[0] = str2[i];
+		temp[1] = str2[i+1];
+
+		if(((temp[0] >= 'A' && temp[0] <= 'Z') || (temp[0] >= 'a' && temp[0] <= 'z'))
+			&& ((temp[1] >= 'A' && temp[1] <= 'Z') || (temp[1] >= 'a' && temp[1] <= 'z'))) devideStr2[saveNum ++] = temp;
+	}
+
+	cout << "str1 쪼갠거 : ";
+	for(int i = 0; i < (int)str1.size(); i ++) cout << devideStr1[i] << "  ";
+	cout << "\nstr2 쪼갠거 : ";
+	for(int i = 0; i < (int)str2.size(); i ++) cout << devideStr2[i] << "  ";
+	
+	// 2. 합집합, 교집합 체크
+	int unionNum = 0;			// 합집합 개수
+	int intersectionNum = 0;	// 교집합 개수
+
+	for(int i = 0; i < (int)str1.size(); i++) {
+		if(devideStr1[i] != "") unionNum ++; // str1의 원소개수 미리 체크(합집합 개수에 사용)
+	}
+
+	for(int i = 0; i < (int)str2.size(); i++) {
+		for(int j = 0; j < (int)str1.size(); j++) {
+			if((!stricmp(devideStr1[j].c_str(), devideStr2[i].c_str())) && (devideStr1[j] != "")) { // 교집합 개수 체크
+				devideStr1[j] = "X"; // 한번 체크한 문자열은 X로 만들어 또 체크하지 않도록 함
+				intersectionNum ++;
+				break; 
+			} else if(j == ((int)str1.size() - 1) && (devideStr2[i] != "")) unionNum ++; // 합집합 개수 체크
+		}
+	}
+
+	cout << "\n합집합 수 : " << unionNum << " 교집합 수 : " << intersectionNum << endl;
+	
+	// 3. 결과 출력(자카드 유사도)
+	float tempAnswer = 0;
+	if(intersectionNum == 0 && unionNum == 0) tempAnswer = 1;
+	else tempAnswer = (float)intersectionNum / unionNum;
+
+	answer = (int)(tempAnswer * 65536);
+	return answer;
+}

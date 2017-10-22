@@ -1,0 +1,63 @@
+#include <iostream>
+#include <string>
+#include <math.h>
+
+using namespace std;
+int solution(string dartResult);
+int main(void)
+{
+	cout << "answer : " << solution("1S2D*3T") << endl;
+	cout << "answer : " << solution("1D2S#10S") << endl;
+	cout << "answer : " << solution("1D2S0T") << endl;
+	cout << "answer : " << solution("1S*2T*3S") << endl;
+	cout << "answer : " << solution("1D#2S*3S") << endl;
+	cout << "answer : " << solution("1T2D3D#") << endl;
+	cout << "answer : " << solution("1D2S3T*") << endl;
+
+	return 0;
+}
+
+int solution(string dartResult) 
+{
+	int answer = 0;
+	unsigned int strLength = 0; // 문자열 길이
+	int unitDigit = 0; // 1일때 한번더 숫자를 체크하면 10의자리
+	int dartPoint[3] = {0, 0, 0}; // 다트점수
+	int pointPosition = -1; // 다트 순서
+
+	strLength = dartResult.length();
+	cout << strLength << endl;
+		
+	// 문자열 길이만큼 for문을 돌려 점수 합산
+	int tempPoint = 0; 
+	for(int j = 0; j < strLength; j ++) {
+		if(dartResult[j] >= '0' && dartResult[j] <= '9') { // 숫자(점수) 체크
+			if(unitDigit == 1) { 
+				tempPoint *= 10;
+			} else {
+				tempPoint = 0;
+				tempPoint = dartResult[j] - '0'; // aToi
+				pointPosition += 1;
+				unitDigit = 1; 
+			}
+		} else if(dartResult[j] == 'S' || dartResult[j] == 'D' || dartResult[j] == 'T') { // 보너스 체크
+			if(dartResult[j] == 'S') tempPoint = (int)pow(tempPoint, 1);
+			else if(dartResult[j] == 'D') tempPoint = (int)pow(tempPoint, 2);
+			else if(dartResult[j] == 'T') tempPoint = (int)pow(tempPoint, 3);
+			dartPoint[pointPosition] = tempPoint;
+			unitDigit = 0;
+		} else {
+			if(dartResult[j] == '*') {
+				if(pointPosition > 0) dartPoint[pointPosition - 1] *= 2;
+				dartPoint[pointPosition] = tempPoint * 2;
+			} else if(dartResult[j] == '#') {
+				dartPoint[pointPosition] = tempPoint * -1;
+			}				
+		}
+	}
+	
+	answer = dartPoint[0] + dartPoint[1] + dartPoint[2];
+
+	return answer;	
+}
+

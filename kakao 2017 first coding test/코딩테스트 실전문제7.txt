@@ -1,0 +1,97 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <math.h>
+
+using namespace std;
+int solution(vector <string> lines);
+int main(void)
+{
+	string arr[] = {"2016-09-15 01:00:04.001 2.0s", "2016-09-15 01:00:07.000 2s"};
+	string arr2[] = {"2016-09-15 01:00:04.002 2.0s", "2016-09-15 01:00:07.000 2s"};
+	string arr3[] = {"2016-09-15 20:59:57.421 0.351s", "2016-09-15 20:59:58.233 1.181s", 
+					"2016-09-15 20:59:58.299 0.8s", "2016-09-15 20:59:58.688 1.041s", 
+					"2016-09-15 20:59:59.591 1.412s", "2016-09-15 21:00:00.464 1.466s", 
+					"2016-09-15 21:00:00.741 1.581s", "2016-09-15 21:00:00.748 2.31s", 
+					"2016-09-15 21:00:00.966 0.381s", "2016-09-15 21:00:02.066 2.62s"};
+	vector <string> testCase(arr, arr + (sizeof(arr) / sizeof(arr[0])));
+	vector <string> testCase2(arr2, arr2 + (sizeof(arr2) / sizeof(arr2[0])));
+	vector <string> testCase3(arr3, arr3 + (sizeof(arr3) / sizeof(arr3[0])));
+	
+	cout << fixed;
+    cout.precision(3);
+
+	cout << "최대 트래픽 : " << solution(testCase) << endl;
+	cout << "최대 트래픽 : " << solution(testCase2) << endl;
+	cout << "최대 트래픽 : " << solution(testCase3) << endl;
+		
+	return 0;
+}								
+	
+// string으로 받은 시각을 float형식의 분 sec으로 변경(계산하기 쉽게)
+double StringToMintime(bool timeFlag, string time)
+{
+	double secTime = 0;
+	double msec = 0;
+	int sec = 0;
+	
+	if(timeFlag == true) {
+		int hour = ((time[0] - '0') * 10 + (time[1] - '0')) * 3600;
+		int min = ((time[3] - '0') * 10 + (time[4] - '0')) * 60;
+		sec = (time[6] - '0') * 10 + (time[7] - '0');
+		msec = ((time[9] - '0') / pow(10, 1)) + ((time[10] - '0') / pow(10, 2)) + ((time[11] - '0') / pow(10, 3)); 
+		secTime = (double)(hour + min + sec) + msec;
+	} else {
+		for(int i = 0; i < time.size() - 1; i ++) {
+			if(i == 0) 	sec = (time[0] - '0');
+			else if(i > 1) msec += (time[i] - '0') / pow(10, i - 1); 
+		}
+		// 3초 일때 로그가 처리되는 시간이 1초 이면 초 전인 2.1초부터 1초를 체크해야함(시작과 끝시간도 로그시간에 포함이므로)
+		// 그래서 0.001을 빼줌
+		secTime = (double)sec + msec - 0.001;
+	}
+
+	return secTime;
+}
+
+int solution(vector <string> lines)
+{
+	double lastlogTime = StringToMintime(true, lines[lines.size() - 1].substr(11, 12)); // 마지막 로그가 끝나는 시간
+	double firstlogTime = 0; // 로그가 시작되는 시간(각 로그의 처음과 끝을 기준으로 대입해줌)
+	int maxTraffic = 0; // 최대 트래픽
+	int answer = 0;	
+
+	// 1. 날짜 체크(2016-09-15가 아닌 날짜의 로그 삭제)
+	for(int i = lines.size() - 1; i >= 0; i --) {
+		if(lines[i].find("2016-09-15", 0) == string::npos) lines[i].erase();
+	}
+	
+	// 2. 각 로그의 시작과 끝을 기준으로 트래픽 체크(시작과 끝에서 요청량이 변하기 때문)
+	for(int i = 0; i < lines.size() * 2; i ++) {
+		if((i % 2) == 0) firstlogTime = StringToMintime(true, lines[i / 2].substr(11, 12)) - StringToMintime(false, lines[i / 2].substr(24));
+		else firstlogTime = StringToMintime(true, lines[i / 2].substr(11, 12));
+
+		//cout <<  firstlogTime << "일때, " << endl;
+		// 3. 체크시작할 로그 시간부터 마지막 로그시간까지 1초씩 증가하여 트래픽 체크
+		for(float j = firstlogTime; j < lastlogTime; j ++) {
+			//cout <<  j << " ~ " << j + 1 << " 트래픽 수 : ";
+
+			// 4. 1초 단위의 트래픽 구간(Time)에 총 몇개의 로그가 처리되는지 체크
+			int tempTraffic = 0;
+			for(int k = 0; k < lines.size(); k ++) {
+				double startTime = StringToMintime(true, lines[k].substr(11, 12)) - StringToMintime(false, lines[k].substr(24));
+				double endTime = StringToMintime(true, lines[k].substr(11, 12));
+			
+				// 5. 트래픽 체크 구간보다 작거나 큰경우를 제외한 모든경우(0.001초라도 걸치는 부분)
+				if(!(startTime < j && endTime < j) && !(startTime > j + 1 && endTime > j + 1)) tempTraffic += 1;
+			}
+			//cout << tempTraffic << endl;
+
+			// 6. 최대 트래픽 체크
+			if(tempTraffic > maxTraffic) maxTraffic = tempTraffic;
+		}
+	}
+
+	answer = maxTraffic;
+	return answer;
+}

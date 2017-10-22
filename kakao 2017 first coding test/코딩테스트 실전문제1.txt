@@ -1,0 +1,61 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+string intToString(int n, int input);
+vector<string> solution(int n, vector<int> arr1, vector<int> arr2);
+int main(void)
+{
+	vector<string> test(5);
+	int iArr1[5] = {9, 20, 28, 18, 11};
+	int iArr2[5] = {30, 1, 21, 17, 28};
+	vector<int> arr1(iArr1, iArr1 + (sizeof(iArr1) / sizeof(iArr1[0])));
+	vector<int> arr2(iArr2, iArr2 + (sizeof(iArr2) / sizeof(iArr2[0])));
+	
+	test = solution(5, arr1, arr2);
+
+	return 0;
+}
+
+vector<string> solution(int n, vector<int> arr1, vector<int> arr2) {
+    vector<string> answer;
+	string num1 = "";
+	string num2 = "";
+	string result = "";	
+	
+	for(int i = 0; i < n; i ++) {
+		result = "";
+		num1 = intToString(n, arr1[i]);
+		num2 = intToString(n, arr2[i]);
+
+		for(int j = 0; j < n; j ++) {
+			if(num1[j] == '#' || num2[j] == '#') result += '#';
+			else if(num1[j] == ' ' && num2[j] == ' ') result += ' ';
+		}
+		answer.push_back(result);
+	}
+	
+	/*********** 결과 출력 하기 위한 코드 ***********/
+	vector<string>::iterator vi;
+	for(vi=answer.begin(); vi!=answer.end(); vi++)
+		cout << *vi << endl;
+	/*********************************************/
+
+	return answer;
+}
+
+string intToString(int n, int input)
+{	
+	unsigned int x = 0x1;
+    string outStr = "";
+	
+	for(int i = n - 1; i >= 0; i --) {
+		if(x & input) outStr += '#';	  
+		else outStr += " ";
+		x = (x << 1);
+	}
+	
+	reverse(outStr.begin(), outStr.end());
+	return outStr;
+}

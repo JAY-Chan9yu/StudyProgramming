@@ -1,0 +1,83 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+int solution(int m, int n, vector <string> board);
+int main(void)
+{
+	string arr[] = {"CCBDE", "AAADE", "AAABF", "CCBBF"};
+	string arr2[] = {"TTTANT", "RRFACC", "RRRFCC", "TRRRAA", "TTMMMF", "TMMTTJ"};
+	string arr3[] = {"AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA"};
+	string arr4[] = {"AAAAAA", "BBAATB", "BBAATB", "JJJTAA", "JJJTAA"};
+	vector <string> testCase(arr, arr + (sizeof(arr) / sizeof(arr[0])));
+	vector <string> testCase2(arr2, arr2 + (sizeof(arr2) / sizeof(arr2[0])));
+	vector <string> testCase3(arr3, arr3 + (sizeof(arr3) / sizeof(arr3[0])));
+	vector <string> testCase4(arr4, arr4 + (sizeof(arr4) / sizeof(arr4[0])));
+	
+	cout << "사라지는 블럭 수 : " <<  solution(4, 5, testCase) << "\n" << endl;
+	cout << "사라지는 블럭 수 : " <<  solution(6, 6, testCase2) << "\n" << endl;
+	cout << "사라지는 블럭 수 : " <<  solution(5, 15, testCase3) << "\n" << endl;
+	cout << "사라지는 블럭 수 : " <<  solution(5, 6, testCase4) << "\n" << endl;
+	
+	return 0;
+}								
+	
+// 문자 비교(대소문자 구분 x)
+int charCmp(char a, char b)
+{
+	if(isupper(a) && isupper(b) && a == b) return 0; // a, b 둘다 대문자일때
+	else if(isupper(a) && !isupper(b) && a == (b - 32)) return 0; // a 대문자 b 소문자 일때
+	else if(!isupper(a) && isupper(b) && (a - 32) == b) return 0; // a 소문자 b 대문자 일때
+	else if(!isupper(a) && !isupper(b) && a == b) return 0; // a, b 둘다 소문자일때
+
+	return 1;
+}
+
+int solution(int m, int n, vector <string> board)
+{
+	int answer = 0;
+	bool boardChangeFlag = false;
+
+	do { // 1. boardChangeFlag == 1일때, board안에 블럭이 사라져서 블럭을 내려야 할 경우
+		boardChangeFlag = 0;
+		// 2. 사라질 블럭 체크
+		for(int i = 0; i < m - 1; i ++) { // m = 높이
+			for(int j = 0; j < n - 1; j ++) { // n = 폭
+				if(board[i][j] != ' ' && !charCmp(board[i][j], board[i][j + 1]) && !charCmp(board[i][j], board[i + 1][j]) && !charCmp(board[i][j], board[i + 1][j + 1])) {
+					// 대문자일 경우에 소문자로 변환(인접한 부분을 소문자로 구분짓기 위하여)
+					if(isupper(board[i][j])) {board[i][j] += 32; answer += 1;}
+					if(isupper(board[i][j + 1])) {board[i][j + 1] += 32; answer += 1;}
+					if(isupper(board[i + 1][j])) {board[i + 1][j] += 32; answer += 1;}
+					if(isupper(board[i + 1][j + 1])) {board[i + 1][j + 1] += 32; answer += 1;}
+					boardChangeFlag = true;
+				}
+			}
+		}
+		
+		// 3. 빈칸일경우 블럭 내리기
+		if(boardChangeFlag) {
+			for(int i = 0; i < n; i ++) { // n = 폭
+				for(int j = m - 2; j >= 0; j --) { // m = 높이
+					for(int k = j; k < m - 1; k ++) { // m(높이)에서 바로 아래에 빈칸이나 소문자블럭이 없을때 까지 밑으로 내림
+						if(board[k + 1][i] == ' ' || !isupper(board[k + 1][i])) { // 소문자(없어져야할 블럭) 이거나 ' '(내릴 블럭)일 경우
+							board[k + 1][i] = board[k][i];
+							board[k][i] = ' ';
+						} else break; // 대문자 블럭일 경우 break
+					}
+				}
+			}
+
+			/******************** 결과 출력 *******************/
+			for(int i = 0; i < board.size(); i ++) {
+				cout << board[i] << endl;
+				if(i == board.size() - 1) {
+					for(int j = 0; j < n; j ++) cout << '-';
+					cout << '\n';
+				}
+			}
+		}		
+	} while(boardChangeFlag);
+
+	return answer;
+}
