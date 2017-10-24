@@ -1,0 +1,51 @@
+﻿빌드 시작: 2017-10-22 오후 6:13:43
+     1>2 노드의 "e:\documents\documents\visual studio 2012\Projects\MFC_Listbox_test2\MFC_Listbox_test2\MFC_Listbox_test2.vcxproj" 프로젝트(Build 대상)입니다.
+     1>ClCompile:
+         E:\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D _WINDOWS /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_NON_CONFORMING_SWPRINTFS /D _UNICODE /D UNICODE /D _AFXDLL /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Release\MFC_Listbox_test2.pch" /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         E:\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D _WINDOWS /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_NON_CONFORMING_SWPRINTFS /D _UNICODE /D UNICODE /D _AFXDLL /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\MFC_Listbox_test2.pch" /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt CppSQLite3U.cpp MFC_Listbox_test2.cpp MFC_Listbox_test2Dlg.cpp
+         CppSQLite3U.cpp
+         Unicode Selected
+         MFC_Listbox_test2.cpp
+         Unicode Selected
+         MFC_Listbox_test2Dlg.cpp
+         Unicode Selected
+       ResourceCompile:
+         C:\Program Files (x86)\Windows Kits\8.0\bin\x86\rc.exe /D NDEBUG /D _UNICODE /D UNICODE /D _AFXDLL /l"0x0412" /IRelease\ /nologo /fo"Release\MFC_Listbox_test2.res" MFC_Listbox_test2.rc 
+       Link:
+         E:\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"e:\documents\documents\visual studio 2012\Projects\MFC_Listbox_test2\Release\MFC_Listbox_test2.exe" /INCREMENTAL:NO /NOLOGO /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"E:\Microsoft Visual Studio 11.0\VC\Include\Manifest\dpiaware.manifest" /DEBUG /PDB:"e:\documents\documents\visual studio 2012\Projects\MFC_Listbox_test2\Release\MFC_Listbox_test2.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"e:\documents\documents\visual studio 2012\Projects\MFC_Listbox_test2\Release\MFC_Listbox_test2.lib" /MACHINE:X86 /SAFESEH Release\MFC_Listbox_test2.res
+         Release\CppSQLite3U.obj
+         Release\MFC_Listbox_test2.obj
+         Release\MFC_Listbox_test2Dlg.obj
+         Release\stdafx.obj
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_free 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_open16 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_errmsg16 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_close 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_step 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_finalize 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_last_insert_rowid 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_busy_timeout 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_prepare16 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_changes 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_reset 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_bind_text16 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_bind_int 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_bind_double 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_bind_blob 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_bind_null 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_column_count 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_column_text16 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_column_int 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_column_double 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_column_bytes16 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_column_blob 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_column_name16 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_column_decltype16 외부 기호를 확인할 수 없습니다.
+     1>CppSQLite3U.obj : error LNK2001: _sqlite3_column_type 외부 기호를 확인할 수 없습니다.
+     1>e:\documents\documents\visual studio 2012\Projects\MFC_Listbox_test2\Release\MFC_Listbox_test2.exe : fatal error LNK1120: 25개의 확인할 수 없는 외부 참조입니다.
+     1>"e:\documents\documents\visual studio 2012\Projects\MFC_Listbox_test2\MFC_Listbox_test2\MFC_Listbox_test2.vcxproj" 프로젝트를 빌드했습니다(Build 대상). - 실패
+
+빌드하지 못했습니다.
+
+경과 시간: 00:00:05.68
