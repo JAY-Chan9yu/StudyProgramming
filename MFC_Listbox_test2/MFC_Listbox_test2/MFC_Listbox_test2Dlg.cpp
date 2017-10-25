@@ -60,6 +60,7 @@ void CMFC_Listbox_test2Dlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST1, m_name_list);
+	DDX_Control(pDX, IDC_LIST2, m_move_list);
 }
 
 BEGIN_MESSAGE_MAP(CMFC_Listbox_test2Dlg, CDialogEx)
@@ -72,6 +73,8 @@ BEGIN_MESSAGE_MAP(CMFC_Listbox_test2Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_DELETE_BTN, &CMFC_Listbox_test2Dlg::OnBnClickedDeleteBtn)
 	ON_BN_CLICKED(IDC_UP_BTN, &CMFC_Listbox_test2Dlg::OnBnClickedUpBtn)
 	ON_BN_CLICKED(IDC_DOWN, &CMFC_Listbox_test2Dlg::OnBnClickedDown)
+	ON_LBN_DBLCLK(IDC_LIST1, &CMFC_Listbox_test2Dlg::OnLbnDblclkList1)
+	ON_LBN_DBLCLK(IDC_LIST2, &CMFC_Listbox_test2Dlg::OnLbnDblclkList2)
 END_MESSAGE_MAP()
 
 
@@ -110,7 +113,7 @@ BOOL CMFC_Listbox_test2Dlg::OnInitDialog()
 	m_name_list.AddString(L"테스트");
 	m_name_list.AddString(L"지찬규");
 	m_name_list.AddString(L"제이");
-
+	scanDB();
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
@@ -157,6 +160,32 @@ void CMFC_Listbox_test2Dlg::OnPaint()
 	}
 }
 
+// DB에서 데이터를 읽어서 리스트에 뿌려줌(더해줌)
+void CMFC_Listbox_test2Dlg::scanDB()
+{
+	CString sTmp;
+	CListBox* pListPage;
+
+	CppSQLite3DB db;
+	try {
+		db.open(DB_FILE_NAME);
+	
+		sTmp.Format(_T("select name, region from customer;"));
+		CppSQLite3Query q = db.execQuery(sTmp);
+		while (!q.eof())
+        {	
+			CString nIdx = q.getStringField(0);	
+			sTmp.Format(_T("%s"), nIdx);
+			m_name_list.AddString(sTmp);
+			q.nextRow();
+		}
+		
+	} catch (CppSQLite3Exception& e) {
+		m_name_list.AddString(_T("에러"));
+	}
+
+	db.close();
+}
 
 // 사용자가 최소화된 창을 끄는 동안에 커서가 표시되도록 시스템에서
 //  이 함수를 호출합니다.
@@ -179,43 +208,99 @@ void CMFC_Listbox_test2Dlg::OnLbnSelchangeList2()
 // 클릭한 아이템을 추가하는 버튼
 void CMFC_Listbox_test2Dlg::OnBnClickedInsertBtn()
 {
-	//m_name_list.AddString(L"제이");
-	CString temp;
-	CString sTmp, sTmp2;		
-	CListBox* pListPage;
+	CString sTmp;
+	if(m_name_list.GetCurSel() < 0) return;
+	BeginWaitCursor();
 
-	CppSQLite3DB db;
 	try {
-		db.open(DB_FILE_NAME);
-	
-		sTmp.Format(_T("select name from customer;"));
-		CppSQLite3Query q = db.execQuery(sTmp);
-		CString nIdx = q.getStringField(0);
-
-		sTmp.Format(_T("%s"), nIdx);
-
-		m_name_list.AddString(sTmp);
-		
-	} catch (CppSQLite3Exception& e) {
-		m_name_list.AddString(_T("에러"));
+		m_name_list.GetText(m_name_list.GetCurSel(), sTmp);
+		m_move_list.AddString(sTmp);
+	}catch (CppSQLite3Exception& e) {
+		m_move_list.AddString(_T("에러"));
 	}
-	db.close();
+
+	EndWaitCursor();
 }
 
 // 클릭한 아이템을 제거하는 버튼
 void CMFC_Listbox_test2Dlg::OnBnClickedDeleteBtn()
 {
+	CString sTmp;
+	if(m_move_list.GetCurSel() < 0) return;
+	BeginWaitCursor();
 
+	try {
+		m_move_list.DeleteString(m_move_list.GetCurSel());
+	}catch (CppSQLite3Exception& e) {
+		m_move_list.AddString(_T("에러"));
+	}
+
+	EndWaitCursor();
 }
 
 // 아이템의 순서를 위로 올려주는 버튼
 void CMFC_Listbox_test2Dlg::OnBnClickedUpBtn()
 {
+	CString sTmp, tmpText;
+	if(m_move_list.GetCurSel() < 0) return;
+	int curSelPos = m_move_list.GetCurSel(); // 커서 위치 저장
 
+	BeginWaitCursor();
+
+	try {
+		if(curSelPos > 0) {
+			m_move_list.GetText(m_move_list.GetCurSel() - 1, tmpText);
+			m_move_list.GetText(m_move_list.GetCurSel(), sTmp);
+
+			m_move_list.DeleteString(curSelPos - 1);
+			m_move_list.InsertString(curSelPos - 1, sTmp);
+
+			m_move_list.DeleteString(curSelPos);
+			m_move_list.InsertString(curSelPos, tmpText);
+		}
+	} catch (CppSQLite3Exception& e) {
+		m_move_list.AddString(_T("에러"));
+	}
+
+	if(curSelPos != 0) m_move_list.SetCurSel(curSelPos - 1); // 커서셀 한 칸 위로이동
+	EndWaitCursor();
 }
 
 // 아이템의 순서를 아래로 내려주는 버튼
 void CMFC_Listbox_test2Dlg::OnBnClickedDown()
 {
+	CString sTmp, tmpText;
+	if(m_move_list.GetCurSel() < 0) return;
+	int curSelPos = m_move_list.GetCurSel(); // 커서 위치 저장
 
+	BeginWaitCursor();
+
+	try {
+		if(curSelPos + 1 < m_move_list.GetCount()) {
+			m_move_list.GetText(curSelPos + 1, tmpText);
+			m_move_list.GetText(curSelPos, sTmp);
+
+			m_move_list.DeleteString(curSelPos + 1);
+			m_move_list.InsertString(curSelPos + 1, sTmp);
+			m_move_list.DeleteString(curSelPos);
+			m_move_list.InsertString(curSelPos, tmpText);
+			
+		}
+	} catch (CppSQLite3Exception& e) {
+		m_move_list.AddString(_T("에러"));
+	}
+
+	m_move_list.SetCurSel(curSelPos + 1); // 커서셀 한 칸 위로이동
+	EndWaitCursor();
+}
+
+void CMFC_Listbox_test2Dlg::OnLbnDblclkList1()
+{
+	OnBnClickedInsertBtn();
+}
+
+
+void CMFC_Listbox_test2Dlg::OnLbnDblclkList2()
+{
+	OnBnClickedDeleteBtn();
 }

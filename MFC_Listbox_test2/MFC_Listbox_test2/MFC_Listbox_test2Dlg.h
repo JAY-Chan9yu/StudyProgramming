@@ -37,6 +37,11 @@ public:
 	afx_msg void OnBnClickedDeleteBtn();
 	afx_msg void OnBnClickedUpBtn();
 	afx_msg void OnBnClickedDown();
+	void scanDB();
 private:
 	CListBox m_name_list;
+	CListBox m_move_list;
+public:
+	afx_msg void OnLbnDblclkList1();
+	afx_msg void OnLbnDblclkList2();
 };
