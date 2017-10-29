@@ -1,7 +1,7 @@
-﻿빌드 시작: 2017-10-25 오후 7:24:37
+﻿빌드 시작: 2017-10-27 오후 1:33:17
      1>2 노드의 "E:\GitSource\StudyProgramming\MFC_Listbox_test2\MFC_Listbox_test2\MFC_Listbox_test2.vcxproj" 프로젝트(Build 대상)입니다.
      1>ClCompile:
-         E:\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_NON_CONFORMING_SWPRINTFS /D _UNICODE /D UNICODE /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\MFC_Listbox_test2.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt MFC_Listbox_test2.cpp MFC_Listbox_test2Dlg.cpp
+         E:\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_NON_CONFORMING_SWPRINTFS /D _UNICODE /D UNICODE /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\MFC_Listbox_test2.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt MFC_Listbox_test2Dlg.cpp
          MFC_Listbox_test2Dlg.cpp
          Unicode Selected
      1>e:\gitsource\studyprogramming\mfc_listbox_test2\mfc_listbox_test2\mfc_listbox_test2dlg.cpp(167): warning C4101: 'pListPage' :참조되지 않은 지역 변수입니다.
@@ -10,9 +10,6 @@
      1>e:\gitsource\studyprogramming\mfc_listbox_test2\mfc_listbox_test2\mfc_listbox_test2dlg.cpp(234): warning C4101: 'e' :참조되지 않은 지역 변수입니다.
      1>e:\gitsource\studyprogramming\mfc_listbox_test2\mfc_listbox_test2\mfc_listbox_test2dlg.cpp(261): warning C4101: 'e' :참조되지 않은 지역 변수입니다.
      1>e:\gitsource\studyprogramming\mfc_listbox_test2\mfc_listbox_test2\mfc_listbox_test2dlg.cpp(289): warning C4101: 'e' :참조되지 않은 지역 변수입니다.
-         코드를 생성하고 있습니다...
-         건너뛰고 있습니다... (관련된 변경 내용 없음)
-         MFC_Listbox_test2.cpp
        Link:
          E:\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\GitSource\StudyProgramming\MFC_Listbox_test2\Debug\MFC_Listbox_test2.exe" /INCREMENTAL /NOLOGO sqlite3.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"E:\Microsoft Visual Studio 11.0\VC\Include\Manifest\dpiaware.manifest" /DEBUG /PDB:"E:\GitSource\StudyProgramming\MFC_Listbox_test2\Debug\MFC_Listbox_test2.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\GitSource\StudyProgramming\MFC_Listbox_test2\Debug\MFC_Listbox_test2.lib" /MACHINE:X86 Debug\MFC_Listbox_test2.res
          Debug\CppSQLite3U.obj
@@ -24,4 +21,4 @@
 
 빌드했습니다.
 
-경과 시간: 00:00:01.04
+경과 시간: 00:00:07.94
