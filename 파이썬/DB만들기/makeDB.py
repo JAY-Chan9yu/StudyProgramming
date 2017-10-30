@@ -25,9 +25,6 @@ def saveDBtable(db, data) :
 
     sql = "insert into customer(name,category,region) values (?, ?, ?)"
     cur.executemany(sql, data)
-    #DB테이블 만들기
-    #sql = "CREATE TABLE test2 ( id integer primary key autoincrement, name text not null, category integer, region text)"
-    #cur.execute(sql)
     conn.commit() # 트랜젝션의 내용을 DB에 반영함
     conn.close()
 
