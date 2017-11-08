@@ -1,0 +1,34 @@
+#include <iostream>
+
+using namespace std;
+int main(void)
+{
+	int a;
+	cin >> a;
+
+	int *buf = new int[sizeof(a) + 1];
+
+	for(int i = 0; i < a; i ++) {
+		cin >> buf[i];
+	}
+
+	int result = 0;
+	int out = 0;
+	
+	for(int i = 0; i < a; i ++) {
+		for(int j = i; j < a - 1; j ++) {
+			if(buf[i] > buf[j + 1]) {
+				int temp = buf[i];
+				buf[i] = buf[j + 1];
+				buf[j + 1] = temp;
+			}
+		}
+		result += buf[i];
+		out += result;	
+	}
+    
+	cout << out;
+
+	delete [] buf;
+	return 0; 
+}
