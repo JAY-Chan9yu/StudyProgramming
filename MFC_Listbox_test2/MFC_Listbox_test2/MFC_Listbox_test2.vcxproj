@@ -109,8 +109,6 @@
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="XLAutomation.h" />
-    <ClInclude Include="XLEzAutomation.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSQLite3U.cpp" />
@@ -120,8 +118,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="XLAutomation.cpp" />
-    <ClCompile Include="XLEzAutomation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MFC_Listbox_test2.rc" />

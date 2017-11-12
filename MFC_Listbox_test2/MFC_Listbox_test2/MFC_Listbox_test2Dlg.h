@@ -31,6 +31,8 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
+	afx_msg void OnLbnSelchangeList1();
+	afx_msg void OnLbnSelchangeList2();
 	afx_msg void OnBnClickedInsertBtn();
 	afx_msg void OnBnClickedDeleteBtn();
 	afx_msg void OnBnClickedUpBtn();
@@ -42,7 +44,4 @@ private:
 public:
 	afx_msg void OnLbnDblclkList1();
 	afx_msg void OnLbnDblclkList2();
-	afx_msg void OnBnClickedSavebtn();
-	afx_msg void OnBnClickedExcelbtn();
-	afx_msg void OnBnClickedViewExcel();
 };

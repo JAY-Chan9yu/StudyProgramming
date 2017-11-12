@@ -7,8 +7,6 @@
 #include "MFC_Listbox_test2Dlg.h"
 #include "afxdialogex.h"
 #include "CppSQLite3U.h"
-#include "XLEzAutomation.h"
-
 #include <iostream>
 	
 #ifdef _DEBUG
@@ -17,7 +15,7 @@
 
 const CString DB_FILE_NAME	= _T("test.db");//tmp
 
-// 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.s
+// 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.
 
 class CAboutDlg : public CDialogEx
 {
@@ -69,15 +67,14 @@ BEGIN_MESSAGE_MAP(CMFC_Listbox_test2Dlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_LBN_SELCHANGE(IDC_LIST1, &CMFC_Listbox_test2Dlg::OnLbnSelchangeList1)
+	ON_LBN_SELCHANGE(IDC_LIST2, &CMFC_Listbox_test2Dlg::OnLbnSelchangeList2)
 	ON_BN_CLICKED(IDC_INSERT_BTN, &CMFC_Listbox_test2Dlg::OnBnClickedInsertBtn)
 	ON_BN_CLICKED(IDC_DELETE_BTN, &CMFC_Listbox_test2Dlg::OnBnClickedDeleteBtn)
 	ON_BN_CLICKED(IDC_UP_BTN, &CMFC_Listbox_test2Dlg::OnBnClickedUpBtn)
 	ON_BN_CLICKED(IDC_DOWN, &CMFC_Listbox_test2Dlg::OnBnClickedDown)
 	ON_LBN_DBLCLK(IDC_LIST1, &CMFC_Listbox_test2Dlg::OnLbnDblclkList1)
 	ON_LBN_DBLCLK(IDC_LIST2, &CMFC_Listbox_test2Dlg::OnLbnDblclkList2)
-	ON_BN_CLICKED(IDC_SAVEBTN, &CMFC_Listbox_test2Dlg::OnBnClickedSavebtn)
-	ON_BN_CLICKED(IDC_EXCELBTN, &CMFC_Listbox_test2Dlg::OnBnClickedExcelbtn)
-	ON_BN_CLICKED(IDC_VIEW_EXCEL, &CMFC_Listbox_test2Dlg::OnBnClickedViewExcel)
 END_MESSAGE_MAP()
 
 
@@ -113,6 +110,9 @@ BOOL CMFC_Listbox_test2Dlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
+	m_name_list.AddString(L"테스트");
+	m_name_list.AddString(L"지찬규");
+	m_name_list.AddString(L"제이");
 	scanDB();
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
@@ -167,20 +167,20 @@ void CMFC_Listbox_test2Dlg::scanDB()
 	CListBox* pListPage;
 
 	CppSQLite3DB db;
-
 	try {
 		db.open(DB_FILE_NAME);
 	
 		sTmp.Format(_T("select name, region from customer;"));
 		CppSQLite3Query q = db.execQuery(sTmp);
-		
-		while (!q.eof()) {	
+		while (!q.eof())
+        {	
 			CString nIdx = q.getStringField(0);	
 			sTmp.Format(_T("%s"), nIdx);
 			m_name_list.AddString(sTmp);
 			q.nextRow();
-		}		
-	} catch (CppSQLite3Exception &e) {
+		}
+		
+	} catch (CppSQLite3Exception& e) {
 		m_name_list.AddString(_T("에러"));
 	}
 
@@ -192,6 +192,17 @@ void CMFC_Listbox_test2Dlg::scanDB()
 HCURSOR CMFC_Listbox_test2Dlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
+}
+
+// DB에 있는 아이템 보여주는 리스트 박스
+void CMFC_Listbox_test2Dlg::OnLbnSelchangeList1()
+{
+}
+
+// 아이템을 추가 제거할 리스트 박스, 마찬가지로 DB에 저장해서 보여줌
+void CMFC_Listbox_test2Dlg::OnLbnSelchangeList2()
+{
+
 }
 
 // 클릭한 아이템을 추가하는 버튼
@@ -271,9 +282,9 @@ void CMFC_Listbox_test2Dlg::OnBnClickedDown()
 
 			m_move_list.DeleteString(curSelPos + 1);
 			m_move_list.InsertString(curSelPos + 1, sTmp);
-
 			m_move_list.DeleteString(curSelPos);
 			m_move_list.InsertString(curSelPos, tmpText);
+			
 		}
 	} catch (CppSQLite3Exception& e) {
 		m_move_list.AddString(_T("에러"));
@@ -292,88 +303,4 @@ void CMFC_Listbox_test2Dlg::OnLbnDblclkList1()
 void CMFC_Listbox_test2Dlg::OnLbnDblclkList2()
 {
 	OnBnClickedDeleteBtn();
-}
-
-// 리스트 내용 DB로 저장하기
-void CMFC_Listbox_test2Dlg::OnBnClickedSavebtn()
-{
-	sqlite3 *db;
-	int retv;
-
-    CString db_path = _T("saveDB.db") ;
-	// LPSTR(LPCTSTR(db_path) CString을 char*로 변환해주는 코드(내용 찾아보기)
-    retv = sqlite3_open(LPSTR(LPCTSTR(db_path)), &db);// open database			
-
-	CppSQLite3DB sdb;
-	try {
-		sdb.open(_T("saveDB.db"));
-		sdb.execDML(_T("CREATE TABLE IF NOT EXISTS People(name VARCHAR(20));"));	
-
-		CString sTmp, sList;
-		CppSQLite3Query q;
-		for(int i = 0; i < m_move_list.GetCount(); i++) {
-			m_move_list.GetText(i, sList);
-			sTmp.Format(_T("insert into People (name) values ('%s');"), sList);
-			q = sdb.execQuery(sTmp);
-		}
-	} catch(CppSQLite3Exception & e) {
-
-	}		
-}
-
-void CMFC_Listbox_test2Dlg::OnBnClickedExcelbtn()
-{
-	char chThisPath[_MAX_PATH];
-    GetCurrentDirectory( _MAX_PATH, LPWSTR((chThisPath)));
-    
-    UpdateData(TRUE);
-    CString strThisPath ;
-    strThisPath.Format(_T("testEE.xlsx"));
-
-    CXLEzAutomation XL(FALSE); // FALSE: 처리 과정을 화면에 보이지 않는다
-	
-	CString sList;
-	for(int i = 0; i < m_move_list.GetCount(); i++) {
-		m_move_list.GetText(i, sList);
-		XL.SetCellValue(1,i,sList);	
-	}
-    XL.SaveFileAs(strThisPath);
-
-    XL.ReleaseExcel();
-}
-
-// 엑셀에 저장된 내용 보기
-void CMFC_Listbox_test2Dlg::OnBnClickedViewExcel()
-{
-	 char chThisPath[_MAX_PATH];
-	 GetCurrentDirectory( _MAX_PATH, LPWSTR(chThisPath));
-	 UpdateData(TRUE);
-
-	 CString strThisPath ;
-	 CString strData;
-	 strThisPath.Format(_T("E:\\Documents\\Documents\\Visual Studio 2012\\Projects\\MFC_Listbox_test2\\MFC_Listbox_test2\\TEST.xls"));
-	 GetModuleFileName( NULL, LPWSTR(chThisPath), _MAX_PATH);
-
-	 CXLEzAutomation XL(FALSE); // FALSE: 처리 과정을 화면에 보이지 않는다
-	 XL.OpenExcelFile(strThisPath);
-	 /*for(int i = 0; i < m_move_list.GetCount(); i++) {
-
-	 }*/
-
-	 strData +="\n(1,1) = ";
-	 strData +=XL.GetCellValue(1,1);
-	 strData +="\n(1,2) = ";
-	 strData +=XL.GetCellValue(1,2);
-	 strData +="\n(1,3) = ";
-	 strData +=XL.GetCellValue(1,3);
-	 strData +="\n(1,4) = ";
-	 strData +=XL.GetCellValue(1,4);
-	 strData +="\n(4,4) = ";
-	 strData +=XL.GetCellValue(4,4);
-	 strData +="\n(7,4) = ";
-	 strData +=XL.GetCellValue(7,4);
-	 
-	 XL.ReleaseExcel();
-
-	 MessageBox(strData);	
 }
