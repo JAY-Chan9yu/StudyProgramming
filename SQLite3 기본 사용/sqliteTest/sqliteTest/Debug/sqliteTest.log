@@ -1,0 +1,20 @@
+﻿빌드 시작: 2017-11-11 오전 1:42:09
+     1>2 노드의 "E:\Documents\Desktop\sqliteTest\sqliteTest\sqliteTest.vcxproj" 프로젝트(Build 대상)입니다.
+     1>ClCompile:
+         E:\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_NON_CONFORMING_SWPRINTFS /D _UNICODE /D UNICODE /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\sqliteTest.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt sqliteTestDlg.cpp
+         sqliteTestDlg.cpp
+         Unicode Selected
+     1>e:\documents\desktop\sqlitetest\sqlitetest\sqlitetestdlg.cpp(111): warning C4101: 'pListPage' :참조되지 않은 지역 변수입니다.
+     1>e:\documents\desktop\sqlitetest\sqlitetest\sqlitetestdlg.cpp(132): warning C4101: 'e' :참조되지 않은 지역 변수입니다.
+       Link:
+         E:\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Documents\Desktop\sqliteTest\Debug\sqliteTest.exe" /INCREMENTAL /NOLOGO sqlite3.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"E:\Microsoft Visual Studio 11.0\VC\Include\Manifest\dpiaware.manifest" /DEBUG /PDB:"E:\Documents\Desktop\sqliteTest\Debug\sqliteTest.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Documents\Desktop\sqliteTest\Debug\sqliteTest.lib" /MACHINE:X86 Debug\sqliteTest.res
+         Debug\CppSQLite3U.obj
+         Debug\sqliteTest.obj
+         Debug\sqliteTestDlg.obj
+         Debug\stdafx.obj
+         sqliteTest.vcxproj -> E:\Documents\Desktop\sqliteTest\Debug\sqliteTest.exe
+     1>"E:\Documents\Desktop\sqliteTest\sqliteTest\sqliteTest.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
+
+빌드했습니다.
+
+경과 시간: 00:00:00.65
