@@ -1,0 +1,15 @@
+﻿빌드 시작: 2017-11-12 오후 7:53:04
+     1>2 노드의 "E:\Documents\Documents\Visual Studio 2012\Projects\htmlView\htmlView\htmlView.vcxproj" 프로젝트(Build 대상)입니다.
+     1>ResourceCompile:
+         C:\Program Files (x86)\Windows Kits\8.0\bin\x86\rc.exe /D _DEBUG /D _UNICODE /D UNICODE /D _AFXDLL /l"0x0412" /IDebug\ /nologo /fo"Debug\htmlView.res" htmlView.rc 
+       Link:
+         E:\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Documents\Documents\Visual Studio 2012\Projects\htmlView\Debug\htmlView.exe" /INCREMENTAL /NOLOGO /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"E:\Microsoft Visual Studio 11.0\VC\Include\Manifest\dpiaware.manifest" /DEBUG /PDB:"E:\Documents\Documents\Visual Studio 2012\Projects\htmlView\Debug\htmlView.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Documents\Documents\Visual Studio 2012\Projects\htmlView\Debug\htmlView.lib" /MACHINE:X86 Debug\htmlView.res
+         Debug\htmlView.obj
+         Debug\htmlViewDlg.obj
+         Debug\stdafx.obj
+         htmlView.vcxproj -> E:\Documents\Documents\Visual Studio 2012\Projects\htmlView\Debug\htmlView.exe
+     1>"E:\Documents\Documents\Visual Studio 2012\Projects\htmlView\htmlView\htmlView.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
+
+빌드했습니다.
+
+경과 시간: 00:00:00.36
