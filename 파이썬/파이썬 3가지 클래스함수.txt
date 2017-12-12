@@ -1,0 +1,66 @@
+class test(object) :
+    testNum = 0
+
+    def instanceFunction(self, x) :
+        self.sNum = x
+        #test.testNum = self.sNum
+        print(self.sNum)#test.testNum)
+
+    @staticmethod
+    def staticFunction() :
+        print(test.testNum)
+
+    @classmethod
+    def classFunction(cls, x) :
+        cls.cNum = x
+        print(cls.cNum)
+
+    @classmethod
+    def clsOutput(cls) :
+        print(cls.cNum)
+
+    def output(self) :
+        print(self.sNum)
+
+#비교하기
+A = test()
+B = test()
+C = test()
+
+print("인스턴스메소드 비교")
+A.instanceFunction(100)
+B.instanceFunction(200)
+C.instanceFunction(300)
+print()
+
+print("스태틱메소드 비교")
+A.staticFunction()
+B.staticFunction()
+C.staticFunction()
+print()
+
+print("클래스메소드 비교")
+A.classFunction('A')
+B.classFunction('B')
+C.classFunction('C')
+print()
+
+print("클래스 형태로 출력 가능한거") # class, staticmethod 둘 다 가능
+test.classFunction('A')
+test.staticFunction()
+#test.instanceFunction()
+print()
+
+# self로 만들었을 경우 다른 객체끼리 자원공유X, 말그대로 self
+# But 나머지 self가 아닌경우 자원공유함
+print("self변수 출력비교")
+A.output()
+B.output()
+C.output()
+print()
+
+# cls변수도 자원 공유함
+print("클래스메소드의 cls 변수 출력비교")
+A.clsOutput()
+B.clsOutput()
+C.clsOutput()
