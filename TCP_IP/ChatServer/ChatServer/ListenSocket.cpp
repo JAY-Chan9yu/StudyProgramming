@@ -65,8 +65,8 @@ void CListenSocket::CloseClientSocket(CSocket* pClient)
 			pMain->clientList->GetText(indx, str1);
 			str2.Format(_T("%d"), posNum);
 			// 소켓리스트, 클라이언트리스트를 비교해서 같은게 있으면 delete
-			if(str1.Find(str2)) {
-				//AfxMessageBox(str1);
+			if(str1.Find(str2) != -1) {
+				AfxMessageBox(str1 + str2);
 				pMain->clientList->DeleteString(indx);
 				break;
 			}
@@ -89,22 +89,22 @@ void CListenSocket::SendSecretChatData(CString pszMessage)
 	pos = m_ptrClientSocketList.GetHeadPosition();
 	CChatServerDlg* pMain = (CChatServerDlg*)AfxGetMainWnd();
 	indx = pMain->clientList->GetCurSel();
+	pMain->clientList->GetText(indx, str1);
 	while(pos != NULL) {
 		pClient = (CClientSocket*)m_ptrClientSocketList.GetNext(pos);
 		posNum = (int)m_ptrClientSocketList.Find(pClient); 
-		pMain->clientList->GetText(indx, str1);
 		str2.Format(_T("%d"), posNum);
-		if(str1.Find(str2)) break;
-	}
-	
-	if(pClient != NULL) {
-		// Send함수의 두번째 인자는 메모리의 크기인데 유니코드를 사용하고 있으므로 *2를 한 크기가 된다.
-		// 이 함수는 전송한 데이터의 길이를 반환한다.
-		int checkLenOfData = pClient->Send(pszMessage, lstrlen(pszMessage) * 2);
-		if(checkLenOfData != lstrlen(pszMessage) * 2) {
-			AfxMessageBox(_T("일부 데이터가 정상적을 전송되지 못했습니다!"));
+		if(str1.Find(str2) != -1) {
+			AfxMessageBox(str1+str2);
+			if(pClient != NULL) {
+				int checkLenOfData = pClient->Send(pszMessage, lstrlen(pszMessage) * 2);
+				if(checkLenOfData != lstrlen(pszMessage) * 2) {
+					AfxMessageBox(_T("일부 데이터가 정상적을 전송되지 못했습니다!"));
+				}
+			}
+			break;
 		}
-	}
+	}	
 }
 
 void CListenSocket::SendChatDataAll(TCHAR* pszMessage)
