@@ -39,7 +39,7 @@ void CClientSocket::OnReceive(int nErrorCode)
 	::ZeroMemory(szBuffer, sizeof(szBuffer)); // :: 붙이고 안붙이고 차이 알아보기
 
 	GetPeerName(strIPAddress, uPortNumber); // 연결된 클라이언트의 정보를 알아내주는 함수
-	if(Receive(szBuffer, sizeof(szBuffer)) > 0) {
+	if(Receive(szBuffer, sizeof(szBuffer)) > 0) { // 전달된 데이터(문자열)가 있을 경우
 		CChatServerDlg* pMain = (CChatServerDlg*)AfxGetMainWnd();
 		strTmp.Format(_T("[%s:%d]: %s"), strIPAddress, uPortNumber, szBuffer);
 		pMain->m_List.AddString(strTmp);

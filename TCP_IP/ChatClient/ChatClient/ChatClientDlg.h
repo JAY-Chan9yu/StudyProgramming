@@ -13,7 +13,9 @@ class CChatClientDlg : public CDialogEx
 public:
 	CChatClientDlg(CWnd* pParent = NULL);	// 표준 생성자입니다.
 	CConnectSocket m_Socket;
-		
+	int SendDataFlag;
+	void SendData();
+	
 // 대화 상자 데이터입니다.
 	enum { IDD = IDD_CHATCLIENT_DIALOG };
 
@@ -29,6 +31,9 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
+	afx_msg void SetTImerStart();
+
+
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
@@ -37,4 +42,7 @@ public:
 	CEdit m_strMessageT;
 	CString m_test;
 	CEdit m_testedit;
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
+//	LRESULT OnThemeChanged();
+//	afx_msg void OnTimeChange();
 };

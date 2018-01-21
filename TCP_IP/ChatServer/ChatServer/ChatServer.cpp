@@ -5,7 +5,7 @@
 #include "stdafx.h"
 #include "ChatServer.h"
 #include "ChatServerDlg.h"
-
+#include <iostream>
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -79,6 +79,7 @@ BOOL CChatServerApp::InitInstance()
 	CChatServerDlg dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
+	
 	if (nResponse == IDOK)
 	{
 		// TODO: 여기에 [확인]을 클릭하여 대화 상자가 없어질 때 처리할

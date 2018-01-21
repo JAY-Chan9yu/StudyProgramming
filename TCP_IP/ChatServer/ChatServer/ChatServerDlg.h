@@ -14,7 +14,8 @@ public:
 	CChatServerDlg(CWnd* pParent = NULL);	// 표준 생성자입니다.
 	void OnDestroy();
 	CListenSocket m_ListenSocket;
-	
+	CListBox* clientList;
+	char testA;
 
 // 대화 상자 데이터입니다.
 	enum { IDD = IDD_CHATSERVER_DIALOG };
@@ -37,4 +38,5 @@ private:
 	
 public:
 	CListBox m_List;
+	afx_msg void OnBnClickedMessageBtn();
 };

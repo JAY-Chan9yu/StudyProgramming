@@ -1,5 +1,5 @@
-
-// ChatClientDlg.cpp : ±¸Çö ÆÄÀÏ
+ï»¿
+// ChatClientDlg.cpp : êµ¬í˜„ íŒŒì¼
 //
 
 #include "stdafx.h"
@@ -12,20 +12,20 @@
 #endif
 
 
-// ÀÀ¿ë ÇÁ·Î±×·¥ Á¤º¸¿¡ »ç¿ëµÇ´Â CAboutDlg ´ëÈ­ »óÀÚÀÔ´Ï´Ù.
+// ì‘ìš© í”„ë¡œê·¸ë¨ ì •ë³´ì— ì‚¬ìš©ë˜ëŠ” CAboutDlg ëŒ€í™” ìƒìì…ë‹ˆë‹¤.
 
 class CAboutDlg : public CDialogEx
 {
 public:
 	CAboutDlg();
 
-// ´ëÈ­ »óÀÚ µ¥ÀÌÅÍÀÔ´Ï´Ù.
+// ëŒ€í™” ìƒì ë°ì´í„°ì…ë‹ˆë‹¤.
 	enum { IDD = IDD_ABOUTBOX };
 
 	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Áö¿øÀÔ´Ï´Ù.
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ì§€ì›ì…ë‹ˆë‹¤.
 
-// ±¸ÇöÀÔ´Ï´Ù.
+// êµ¬í˜„ì…ë‹ˆë‹¤.
 protected:
 	DECLARE_MESSAGE_MAP()
 };
@@ -43,7 +43,7 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// CChatClientDlg ´ëÈ­ »óÀÚ
+// CChatClientDlg ëŒ€í™” ìƒì
 
 
 
@@ -67,18 +67,21 @@ BEGIN_MESSAGE_MAP(CChatClientDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_Button_Send, &CChatClientDlg::OnBnClickedButtonSend)
+	ON_WM_TIMER()
+//	ON_WM_THEMECHANGED()
+//	ON_WM_TIMECHANGE()
 END_MESSAGE_MAP()
 
 
-// CChatClientDlg ¸Ş½ÃÁö Ã³¸®±â
+// CChatClientDlg ë©”ì‹œì§€ ì²˜ë¦¬ê¸°
 
 BOOL CChatClientDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
-
-	// ½Ã½ºÅÛ ¸Ş´º¿¡ "Á¤º¸..." ¸Ş´º Ç×¸ñÀ» Ãß°¡ÇÕ´Ï´Ù.
-
-	// IDM_ABOUTBOX´Â ½Ã½ºÅÛ ¸í·É ¹üÀ§¿¡ ÀÖ¾î¾ß ÇÕ´Ï´Ù.
+	SendDataFlag = 0;
+	// ì‹œìŠ¤í…œ ë©”ë‰´ì— "ì •ë³´..." ë©”ë‰´ í•­ëª©ì„ ì¶”ê°€í•©ë‹ˆë‹¤.
+	
+	// IDM_ABOUTBOXëŠ” ì‹œìŠ¤í…œ ëª…ë ¹ ë²”ìœ„ì— ìˆì–´ì•¼ í•©ë‹ˆë‹¤.
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
 
@@ -96,19 +99,20 @@ BOOL CChatClientDlg::OnInitDialog()
 		}
 	}
 
-	// ÀÌ ´ëÈ­ »óÀÚÀÇ ¾ÆÀÌÄÜÀ» ¼³Á¤ÇÕ´Ï´Ù. ÀÀ¿ë ÇÁ·Î±×·¥ÀÇ ÁÖ Ã¢ÀÌ ´ëÈ­ »óÀÚ°¡ ¾Æ´Ò °æ¿ì¿¡´Â
-	//  ÇÁ·¹ÀÓ¿öÅ©°¡ ÀÌ ÀÛ¾÷À» ÀÚµ¿À¸·Î ¼öÇàÇÕ´Ï´Ù.
-	SetIcon(m_hIcon, TRUE);			// Å« ¾ÆÀÌÄÜÀ» ¼³Á¤ÇÕ´Ï´Ù.
-	SetIcon(m_hIcon, FALSE);		// ÀÛÀº ¾ÆÀÌÄÜÀ» ¼³Á¤ÇÕ´Ï´Ù.
+	// ì´ ëŒ€í™” ìƒìì˜ ì•„ì´ì½˜ì„ ì„¤ì •í•©ë‹ˆë‹¤. ì‘ìš© í”„ë¡œê·¸ë¨ì˜ ì£¼ ì°½ì´ ëŒ€í™” ìƒìê°€ ì•„ë‹ ê²½ìš°ì—ëŠ”
+	//  í”„ë ˆì„ì›Œí¬ê°€ ì´ ì‘ì—…ì„ ìë™ìœ¼ë¡œ ìˆ˜í–‰í•©ë‹ˆë‹¤.
+	SetIcon(m_hIcon, TRUE);			// í° ì•„ì´ì½˜ì„ ì„¤ì •í•©ë‹ˆë‹¤.
+	SetIcon(m_hIcon, FALSE);		// ì‘ì€ ì•„ì´ì½˜ì„ ì„¤ì •í•©ë‹ˆë‹¤.
 
-	// TODO: ¿©±â¿¡ Ãß°¡ ÃÊ±âÈ­ ÀÛ¾÷À» Ãß°¡ÇÕ´Ï´Ù.
+	// TODO: ì—¬ê¸°ì— ì¶”ê°€ ì´ˆê¸°í™” ì‘ì—…ì„ ì¶”ê°€í•©ë‹ˆë‹¤.
 	m_Socket.Create();
 	if(m_Socket.Connect(_T("127.0.0.1"), 21000) == FALSE) {
 		AfxMessageBox(_T("ERROR : Failed to connect Server"));
 		PostQuitMessage(0);
 		return FALSE;
 	}
-	return TRUE;  // Æ÷Ä¿½º¸¦ ÄÁÆ®·Ñ¿¡ ¼³Á¤ÇÏÁö ¾ÊÀ¸¸é TRUE¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+	
+	return TRUE;  // í¬ì»¤ìŠ¤ë¥¼ ì»¨íŠ¸ë¡¤ì— ì„¤ì •í•˜ì§€ ì•Šìœ¼ë©´ TRUEë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
 }
 
 void CChatClientDlg::OnSysCommand(UINT nID, LPARAM lParam)
@@ -124,19 +128,20 @@ void CChatClientDlg::OnSysCommand(UINT nID, LPARAM lParam)
 	}
 }
 
-// ´ëÈ­ »óÀÚ¿¡ ÃÖ¼ÒÈ­ ´ÜÃß¸¦ Ãß°¡ÇÒ °æ¿ì ¾ÆÀÌÄÜÀ» ±×¸®·Á¸é
-//  ¾Æ·¡ ÄÚµå°¡ ÇÊ¿äÇÕ´Ï´Ù. ¹®¼­/ºä ¸ğµ¨À» »ç¿ëÇÏ´Â MFC ÀÀ¿ë ÇÁ·Î±×·¥ÀÇ °æ¿ì¿¡´Â
-//  ÇÁ·¹ÀÓ¿öÅ©¿¡¼­ ÀÌ ÀÛ¾÷À» ÀÚµ¿À¸·Î ¼öÇàÇÕ´Ï´Ù.
+// ëŒ€í™” ìƒìì— ìµœì†Œí™” ë‹¨ì¶”ë¥¼ ì¶”ê°€í•  ê²½ìš° ì•„ì´ì½˜ì„ ê·¸ë¦¬ë ¤ë©´
+//  ì•„ë˜ ì½”ë“œê°€ í•„ìš”í•©ë‹ˆë‹¤. ë¬¸ì„œ/ë·° ëª¨ë¸ì„ ì‚¬ìš©í•˜ëŠ” MFC ì‘ìš© í”„ë¡œê·¸ë¨ì˜ ê²½ìš°ì—ëŠ”
+//  í”„ë ˆì„ì›Œí¬ì—ì„œ ì´ ì‘ì—…ì„ ìë™ìœ¼ë¡œ ìˆ˜í–‰í•©ë‹ˆë‹¤.
 
 void CChatClientDlg::OnPaint()
 {
+
 	if (IsIconic())
 	{
-		CPaintDC dc(this); // ±×¸®±â¸¦ À§ÇÑ µğ¹ÙÀÌ½º ÄÁÅØ½ºÆ®ÀÔ´Ï´Ù.
+		CPaintDC dc(this); // ê·¸ë¦¬ê¸°ë¥¼ ìœ„í•œ ë””ë°”ì´ìŠ¤ ì»¨í…ìŠ¤íŠ¸ì…ë‹ˆë‹¤.
 
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
-		// Å¬¶óÀÌ¾ğÆ® »ç°¢Çü¿¡¼­ ¾ÆÀÌÄÜÀ» °¡¿îµ¥¿¡ ¸ÂÃä´Ï´Ù.
+		// í´ë¼ì´ì–¸íŠ¸ ì‚¬ê°í˜•ì—ì„œ ì•„ì´ì½˜ì„ ê°€ìš´ë°ì— ë§ì¶¥ë‹ˆë‹¤.
 		int cxIcon = GetSystemMetrics(SM_CXICON);
 		int cyIcon = GetSystemMetrics(SM_CYICON);
 		CRect rect;
@@ -144,7 +149,7 @@ void CChatClientDlg::OnPaint()
 		int x = (rect.Width() - cxIcon + 1) / 2;
 		int y = (rect.Height() - cyIcon + 1) / 2;
 
-		// ¾ÆÀÌÄÜÀ» ±×¸³´Ï´Ù.
+		// ì•„ì´ì½˜ì„ ê·¸ë¦½ë‹ˆë‹¤.
 		dc.DrawIcon(x, y, m_hIcon);
 	}
 	else
@@ -153,27 +158,73 @@ void CChatClientDlg::OnPaint()
 	}
 }
 
-// »ç¿ëÀÚ°¡ ÃÖ¼ÒÈ­µÈ Ã¢À» ²ô´Â µ¿¾È¿¡ Ä¿¼­°¡ Ç¥½ÃµÇµµ·Ï ½Ã½ºÅÛ¿¡¼­
-//  ÀÌ ÇÔ¼ö¸¦ È£ÃâÇÕ´Ï´Ù.
+// ì‚¬ìš©ìê°€ ìµœì†Œí™”ëœ ì°½ì„ ë„ëŠ” ë™ì•ˆì— ì»¤ì„œê°€ í‘œì‹œë˜ë„ë¡ ì‹œìŠ¤í…œì—ì„œ
+//  ì´ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•©ë‹ˆë‹¤.
 HCURSOR CChatClientDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+void CChatClientDlg::SetTImerStart()
+{
+	SetTimer(1,1000,NULL);
+}
 
+void CChatClientDlg::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO: ì—¬ê¸°ì— ë©”ì‹œì§€ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€ ë°/ë˜ëŠ” ê¸°ë³¸ê°’ì„ í˜¸ì¶œí•©ë‹ˆë‹¤.
+	if(nIDEvent == 1) SendData();
+	CDialogEx::OnTimer(nIDEvent);
+}
+
+
+void CALLBACK TestCallbackSend(HWND hWnd, UINT nMsg, UINT_PTR nIDEvent, DWORD dwTime)
+{
+	// ì½œë°±í•¨ìˆ˜ëŠ” Dlgí´ë˜ìŠ¤ì˜ ë©¤ë²„í•¨ìˆ˜ê°€ ì•„ë‹ˆê¸° ë•Œë¬¸ì— Dlgí¬ì¸í„°ë¥¼ ì„ ì–¸í•˜ì—¬ ì‚¬ìš©í•œë‹¤.
+	CChatClientDlg* chatDlg = (CChatClientDlg*)CDialogEx::FromHandle(hWnd); // ì´ˆê¸°í™” í•„ìˆ˜
+	chatDlg->SendData();
+}
 
 void CChatClientDlg::OnBnClickedButtonSend()
 {
 	CString str;
-	//UpdateData(TRUE);
-	//GetDlgItemText( IDC_EDIT5, str );   
-	CEdit* test = (CEdit*)GetDlgItem(IDC_EDIT5);
+	
+	if(SendDataFlag == 0) {
+		SendDataFlag = 1; // send data flagê°€ 1ì¼ë•Œ ë°ì´í„° ì „ì†¡
+		//SetTimer(1,1000,NULL);
+		SetTimer(2,1000,(TIMERPROC)TestCallbackSend);
+	} else if(SendDataFlag == 1) {
+		SendDataFlag = 0;
+		//KillTimer(1);	
+		KillTimer(2);	
+	}
+	
+	/*// ë°©ë²•1, ë¦¬ì†ŒìŠ¤ë·°ì—ì„œ ë§Œë“  ê±° ê·¸ëŒ€ë¡œ ì“¸ë•Œ
+	UpdateData(TRUE);
+	GetDlgItemText(IDC_EDIT5, str );   
+	m_Socket.Send((LPVOID)(LPCTSTR)str, str.GetLength() * 2);
+	str.Format(_T(""));
+	SetDlgItemText( IDC_EDIT5, str );
+	UpdateData(FALSE);*/
+	
+	// ë°©ë²•2. ê°ì²´ìƒì„±í•´ì„œ ì“¸ë•Œ
+	/*CEdit* test = (CEdit*)GetDlgItem(IDC_EDIT5);
 	test->GetWindowTextW(str);
 	m_Socket.Send((LPVOID)(LPCTSTR)str, str.GetLength() * 2);
-	//m_Socket.Send((LPVOID)(LPCTSTR)test, m_test.GetLength() * 2);
-
-	//str.Format(_T(""));
-	//SetDlgItemText( IDC_EDIT5, str );/	
-	str = _T("");
-	UpdateData(FALSE);
+	test->SetWindowTextW(_T(""));*/
 }
+
+void CChatClientDlg::SendData() 
+{
+	CString str;
+	WORD Word = 0x1234;
+	str.Format(_T("%x:%x:%x:%x"), Word, Word, Word, Word);
+	m_Socket.Send((LPVOID)(LPCTSTR)str, str.GetLength()*2);
+
+	/*CEdit* test = (CEdit*)GetDlgItem(IDC_EDIT5);
+	test->GetWindowTextW(str);
+	m_Socket.Send((LPVOID)(LPCTSTR)str, str.GetLength() * 2);
+	test->SetWindowTextW(_T(""));*/
+
+}
+

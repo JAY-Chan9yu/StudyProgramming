@@ -54,6 +54,7 @@ END_MESSAGE_MAP()
 CChatServerDlg::CChatServerDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CChatServerDlg::IDD, pParent)
 {
+	
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
@@ -67,6 +68,7 @@ BEGIN_MESSAGE_MAP(CChatServerDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_MESSAGE_BTN, &CChatServerDlg::OnBnClickedMessageBtn)
 END_MESSAGE_MAP()
 
 
@@ -75,13 +77,18 @@ END_MESSAGE_MAP()
 BOOL CChatServerDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
+	CString str;
+	clientList = (CListBox*)GetDlgItem(IDC_CLIENT_LIST);
+	
+	//if(m_ListenSocket.clientList.GetTail())
+	//	clientList->AddString(m_ListenSocket.clientList.GetTail());
 
 	// 시스템 메뉴에 "정보..." 메뉴 항목을 추가합니다.
 
 	// IDM_ABOUTBOX는 시스템 명령 범위에 있어야 합니다.
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
-
+	
 	CMenu* pSysMenu = GetSystemMenu(FALSE);
 	if (pSysMenu != NULL)
 	{
@@ -100,7 +107,7 @@ BOOL CChatServerDlg::OnInitDialog()
 	//  프레임워크가 이 작업을 자동으로 수행합니다.
 	SetIcon(m_hIcon, TRUE);			// 큰 아이콘을 설정합니다.
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
-
+	
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
 	if(m_ListenSocket.Create(21000, SOCK_STREAM)) { // 소켓생성
 		if(!m_ListenSocket.Listen()) {
@@ -110,8 +117,12 @@ BOOL CChatServerDlg::OnInitDialog()
 		AfxMessageBox(_T("ERROR:Failed to create server socket!"));
 	}
 
+	//if(m_ListenSocket.acceptFlag)
+	//clientList->AddString(_T("TEST"));
+	
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
+
 
 void CChatServerDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
@@ -119,6 +130,7 @@ void CChatServerDlg::OnSysCommand(UINT nID, LPARAM lParam)
 	{
 		CAboutDlg dlgAbout;
 		dlgAbout.DoModal();
+		
 	}
 	else
 	{
@@ -132,6 +144,7 @@ void CChatServerDlg::OnSysCommand(UINT nID, LPARAM lParam)
 
 void CChatServerDlg::OnPaint()
 {
+	
 	if (IsIconic())
 	{
 		CPaintDC dc(this); // 그리기를 위한 디바이스 컨텍스트입니다.
@@ -180,16 +193,16 @@ void CChatServerDlg::OnDestroy()
 			delete pClient;
 		}
 	}
-
 	m_ListenSocket.ShutDown();
 	m_ListenSocket.Close();
 }
 
+void CChatServerDlg::OnBnClickedMessageBtn()
+{
+	CString str;
+	CEdit* test = (CEdit*)GetDlgItem(IDC_SECRET_MESSAGE);
+	test->GetWindowTextW(str);
+	test->SetWindowTextW(_T(""));
+	m_ListenSocket.SendSecretChatData(str);
 
-
-//void CAboutDlg::OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized)
-//{
-//	CDialogEx::OnActivate(nState, pWndOther, bMinimized);
-//
-//	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
-//}
+}
