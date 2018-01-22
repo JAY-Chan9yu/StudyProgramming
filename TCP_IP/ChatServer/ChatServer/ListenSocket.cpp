@@ -113,6 +113,7 @@ void CListenSocket::SendChatDataAll(TCHAR* pszMessage)
 	pos = m_ptrClientSocketList.GetHeadPosition();
 	CClientSocket* pClient = NULL;
 
+
 	while(pos != NULL) {
 		pClient = (CClientSocket*)m_ptrClientSocketList.GetNext(pos);
 		if(pClient != NULL) {

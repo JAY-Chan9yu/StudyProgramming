@@ -15,6 +15,7 @@ public:
 	void OnDestroy();
 	CListenSocket m_ListenSocket;
 	CListBox* clientList;
+	CEdit* textBuffer[8]; // Text이름 설정 관련 
 	char testA;
 
 // 대화 상자 데이터입니다.

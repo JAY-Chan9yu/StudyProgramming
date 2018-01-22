@@ -73,16 +73,14 @@ END_MESSAGE_MAP()
 
 
 // CChatServerDlg 메시지 처리기
-
 BOOL CChatServerDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 	CString str;
 	clientList = (CListBox*)GetDlgItem(IDC_CLIENT_LIST);
+	int textStr[8] = {IDC_TEXT0, IDC_TEXT1, IDC_TEXT2, IDC_TEXT3, IDC_TEXT4, IDC_TEXT5, IDC_TEXT6, IDC_TEXT7};	
+	for(int i = 0; i < 8; i ++)	textBuffer[i] = (CEdit*)GetDlgItem(textStr[i]);
 	
-	//if(m_ListenSocket.clientList.GetTail())
-	//	clientList->AddString(m_ListenSocket.clientList.GetTail());
-
 	// 시스템 메뉴에 "정보..." 메뉴 항목을 추가합니다.
 
 	// IDM_ABOUTBOX는 시스템 명령 범위에 있어야 합니다.
@@ -183,7 +181,8 @@ void CChatServerDlg::OnDestroy()
 
 	pos = m_ListenSocket.m_ptrClientSocketList.GetHeadPosition();
 	CClientSocket* pClient = NULL;
-	
+		
+
 	while(pos != NULL) {
 		pClient = (CClientSocket*)m_ListenSocket.m_ptrClientSocketList.GetNext(pos);
 		if(pClient != NULL) {
@@ -200,6 +199,8 @@ void CChatServerDlg::OnDestroy()
 void CChatServerDlg::OnBnClickedMessageBtn()
 {
 	CString str;
+	CString testStr;
+	
 	CEdit* test = (CEdit*)GetDlgItem(IDC_SECRET_MESSAGE);
 	test->GetWindowTextW(str);
 	test->SetWindowTextW(_T(""));

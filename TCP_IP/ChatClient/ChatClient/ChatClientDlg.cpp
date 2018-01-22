@@ -217,8 +217,8 @@ void CChatClientDlg::OnBnClickedButtonSend()
 void CChatClientDlg::SendData() 
 {
 	CString str;
-	WORD Word = 0x1234;
-	str.Format(_T("%x:%x:%x:%x"), Word, Word, Word, Word);
+	char Word = 0x12;
+	str.Format(_T("%x%x%x%x%x%x%x%x"), Word, Word, Word, Word, Word, Word, Word, Word);
 	m_Socket.Send((LPVOID)(LPCTSTR)str, str.GetLength()*2);
 
 	/*CEdit* test = (CEdit*)GetDlgItem(IDC_EDIT5);
