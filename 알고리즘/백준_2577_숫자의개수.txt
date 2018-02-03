@@ -1,0 +1,29 @@
+#include <iostream>
+#include <algorithm>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int main(void)
+{
+	int num[3] = {0,};
+	int resultNum[10] = {0,};
+	for(int i = 0; i < 3; i ++) {
+		cin >> num[i];
+	}
+
+	int result = num[0] * num[1] * num[2];
+	string changeResult = to_string(result);
+	
+	for(int i = 0; i < changeResult.length(); i ++) {
+		resultNum[changeResult[i] - '0'] ++;
+	}
+
+	for(int i = 0; i < 10; i ++) {
+		cout << resultNum[i] << endl;
+	}
+
+	int te;
+	cin >> te;
+}
